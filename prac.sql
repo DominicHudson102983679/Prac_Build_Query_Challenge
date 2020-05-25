@@ -132,7 +132,7 @@ INSERT INTO SubjectOffering (SubjCode, Year, Semester, Fee, StaffID) VALUES
 
 INSERT INTO Teacher (StaffID, Surname, GivenName) VALUES 
  (98776655, 'Starr', 'Ringo')
-,(87665544, '87665544', 'John')
+,(87665544, 'Lennon', 'John')
 ,(76554433, 'McCartney', 'Paul');
 
 INSERT INTO Subject (SubjCode, Description) VALUES 
@@ -143,6 +143,7 @@ INSERT INTO Subject (SubjCode, Description) VALUES
 --------------------------------------- Task 4
 */
 
+/* ------------------------------------- Query 1
 Select 
 Stu.GivenName, Stu.Surname, 
 Sbj.SubjCode, Sbj.Description, 
@@ -150,14 +151,44 @@ SbjOff.Year, SbjOff.Semester, SbjOff.Fee,
 Tch.GivenName, Tch.Surname
 
 FROM Student Stu
-INNER JOIN Subject Sbj
-ON Enrolment.StudentID = Student.StudentID
+INNER JOIN Enrolment
+ON Enrolment.StudentID = Stu.StudentID
 
-LEFT OUTER JOIN SubjectOffering SbjOff 
+INNER JOIN Subject Sbj
+on Enrolment.SubjCode = Sbj.Subjcode
+
+INNER JOIN SubjectOffering SbjOff 
 ON Sbj.SubjCode = SbjOff.SubjCode
 
-RIGHT OUTER JOIN Teacher Tch
+INNER JOIN Teacher Tch
 ON SbjOff.StaffID = Tch.StaffID;
+*/
 
+/*------------------------------------------- Query 2
+Select SbjOff.Year, SbjOff.Semester, Count(Enr.StudentID) AS Enrolments
 
+FROM SubjectOffering SbjOff
+INNER JOIN Enrolment Enr
+ON Enr.SubjCode = SbjOff.SubjCode
+
+Group BY SbjOff.Year, SbjOff.Semester;
+*/
+
+/*--------------------------------------------Query 3
+Select 
+Sbj.Description, 
+Enr.StudentID, 
+SbjOff.Year, SbjOff.Semester, SbjOff.Fee
+
+FROM Subject Sbj
+INNER JOIN SubjectOffering SbjOff
+ON Sbj.SubjCode = SbjOff.SubjCode
+
+INNER JOIN Enrolment Enr
+ON Sbj.SubjCode = Enr.SubjCode
+
+WHERE Fee = 225
+
+ORDER BY Year asc, Semester asc;
+*/
 
